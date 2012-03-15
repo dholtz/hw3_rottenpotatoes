@@ -7,7 +7,6 @@ Given /the following movies exist/ do |movies_table|
     a_movie = Movie.new(:title => movie["title"], :rating => movie["rating"], :release_date => movie["release_date"])
     a_movie.save
   end
-  assert false, "Unimplmemented"
 end
 
 # Make sure that one string (regexp) occurs before or after another one
