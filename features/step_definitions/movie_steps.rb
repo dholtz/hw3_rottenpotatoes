@@ -4,9 +4,7 @@ Given /the following movies exist/ do |movies_table|
   movies_table.hashes.each do |movie|
     # each returned element will be a hash whose key is the table header.
     # you should arrange to add that movie to the database here.
-    #a_movie = Movie.new(:title => movie["title"], :rating => movie["rating"], :release_date => movie["release_date"])
-    #a_movie.create
-    Movie.create!(movie)
+   Movie.create!(movie)
   end
 end
 
@@ -16,16 +14,7 @@ end
 Then /I should see "(.*)" before "(.*)"/ do |mov1, mov2|
   #  ensure that that e1 occurs before e2.
   #  page.content  is the entire content of the page as a string.
-  # id('movies')/x:tbody/x:tr
-  sorted_movies = page.all(:xpath, '//table[@id="movies"]/tbody/tr/td')
-  @sorted_movie_names = []
-  sorted_movies.each do |elem|
-    @sorted_movie_names << elem.text
-  end
-  mov1_pos = @sorted_movies_names.index(mov1)
-  mov2_pos = @sorted_movies_names.index(mov2)
-  puts mov1_pos
-  puts mov2_pos
+  page.body.index(mov1) < page.body.index(mov2)
 end
 
 # Make it easier to express checking or unchecking several boxes at once
@@ -44,4 +33,9 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
       step %Q{I check "ratings_#{rating}"}
     end
   end
+end
+
+Then /There should be "(.*)" movies"/ do |num_movies|
+  puts num_movies
+  puts page.body
 end
