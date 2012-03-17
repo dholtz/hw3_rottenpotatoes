@@ -31,4 +31,7 @@ Scenario: sort movies alphabetically
 Scenario: sort movies in increasing order of release date
 #  When I follow "Release Date"
 #  Then I should see "The Terminator" before "Amelie"
-
+  When I check the following ratings: G PG PG-13 NC-17 R
+  And I press "Refresh"
+  When I follow "Release Date"
+  Then I should see "The Terminator" before "Amelie"

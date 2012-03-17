@@ -14,7 +14,7 @@ end
 Then /I should see "(.*)" before "(.*)"/ do |mov1, mov2|
   #  ensure that that e1 occurs before e2.
   #  page.content  is the entire content of the page as a string.
-  page.body.index(mov1) < page.body.index(mov2)
+  assert page.body.index(mov1) < page.body.index(mov2)
 end
 
 # Make it easier to express checking or unchecking several boxes at once
@@ -36,6 +36,11 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
 end
 
 Then /There should be "(.*)" movies"/ do |num_movies|
-  puts num_movies
-  puts page.body
+  sorted_movies = page.all(:xpath, ".//a[starts-with(text(),'More about')]")
+  assert sorted_movies.size.eql?num_movies.to_i
+end
+
+Then /I should see all of the movies/ do
+  sorted_movies = page.all(:xpath, ".//a[starts-with(text(),'More about')]")
+  assert sorted_movies.size.eql?Movie.count
 end
